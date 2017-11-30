@@ -101,23 +101,33 @@ let mouseButtonPressed = (event, index) => {
  * @todo THEN USING THESE FUNCTIONS, REPLACE THE 0 IN EACH FUNCTION DEFINITION BELOW WITH THE APPROPRIATE OUTPUT
  * @todo BE SURE TO DOCUMENT EACH FUNCTION IN JSDOC FORMAT (USE BELOW AS REFERENCE AND SEE: http://usejsdoc.org/)
  */
+
 let convertToLarger = (units, conversionFactor) => Math.trunc(units/conversionFactor)
+
+
+
 let msToSeconds = ms => convertToLarger(ms,1000); 
 let msToMinutes = ms => convertToLarger(msToSeconds(ms), 60);
 let msToHours = ms => convertToLarger(msToMinutes(ms), 60);
+
+let remainingAfterConvert = (units, conversionFactor) => Math.trunc (units - (conversionFactor * Math.trunc(Math.trunc(units) / conversionFactor)))
+
 /**
  * Given a number of milliseconds from midnight, returns the second (0 to 60) for the displayed time
  * @param {number} num the number of milliseconds to convert to seconds
  * @return {number} second for the displayed time (0 to 60)
  */
 
-let remainingAfterConvert = (units, conversionFactor) => (units % conversionFactor)
 let getSecondFromMs   = num => remainingAfterConvert(msToSeconds(num), 60);
 let getMinuteFromMs   = num => remainingAfterConvert(msToMinutes(num), 60);
 let getHourFromMs     = num => remainingAfterConvert(msToHours(num), 24);
-let getSecondFromDays = num => 0;
-let getMinuteFromDays = num => 0;
-let getHourFromDays   = num => 0;
+let convertToSmaller = (units, conversionFactor) => (units * conversionFactor);
+let daysToTotalHours = days => convertToSmaller(days, 24);
+let daysToTotalMinutes = days => convertToSmaller(daysToTotalHours(days), 60);
+let daysToTotalSeconds = days => convertToSmaller(daysToTotalMinutes(days), 60);
+let getSecondFromDays = num => remainingAfterConvert(daysToTotalSeconds(num), 60); 
+let getMinuteFromDays = num => remainingAfterConvert(daysToTotalMinutes(num), 60);
+let getHourFromDays   = num => remainingAfterConvert(daysToTotalHours(num), 24);
 
 /* END REPLACEMENT FOR ASSIGNMENT 2 */
 
